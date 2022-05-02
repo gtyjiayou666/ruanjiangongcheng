@@ -1,0 +1,15 @@
+spring:
+  http:
+    multipart:
+      location: /tmp/data
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 200MB
+app:
+  hdfs:
+    path: hdfs://user/hadoop/
+    username: hadoop
+
+server :
+  port : 8099

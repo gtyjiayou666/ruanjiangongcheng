@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dbia.archive.dao.file_infMapper">
+  <resultMap id="BaseResultMap" type="com.dbia.archive.model.file_inf">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="cate_id" jdbcType="VARCHAR" property="cateId" />
+    <result column="dir_id" jdbcType="INTEGER" property="dirId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="file_size" jdbcType="INTEGER" property="fileSize" />
+    <result column="file_upload_time" jdbcType="TIMESTAMP" property="fileUploadTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.dbia.archive.model.file_inf">
+    insert into file_inf (id, file_name, cate_id,
+                          dir_id, user_id, file_size,
+                          file_upload_time)
+    values (#{id,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{cateId,jdbcType=VARCHAR},
+            #{dirId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{fileSize,jdbcType=INTEGER},
+            #{fileUploadTime,jdbcType=TIMESTAMP})
+  </insert>
+  <delete id="diriddelete">
+    delete from file_inf where dir_id = #{dir_id}
+  </delete>
+  <select id="dir_idselect" parameterType="int" resultType="com.dbia.archive.model.file_inf">
+    SELECT * FROM file_inf WHERE dir_id = #{dir_id}
+  </select>
+  <select id="select"  resultType="com.dbia.archive.model.file_inf">
+    SELECT * FROM file_inf WHERE dir_id = #{dir_id} and file_name = #{filename}
+  </select>
+  <delete id="delete">
+    delete from file_inf where id = #{id}
+  </delete>
+  <select id="useridselect" resultType="com.dbia.archive.model.file_inf">
+    SELECT * FROM file_inf WHERE dir_id = #{dir_id} and user_id = #{userid}
+  </select>
+</mapper>

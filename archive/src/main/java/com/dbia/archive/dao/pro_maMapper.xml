@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dbia.archive.dao.pro_maMapper">
+    <select id="select"  resultType="com.dbia.archive.model.pro_ma">
+        SELECT * FROM pro_ma where userid = #{userid}
+    </select>
+    <delete id="delete">
+        delete from pro_ma where userid = #{userid}
+    </delete>
+    <insert id="insert" parameterType="com.dbia.archive.model.pro_ma">
+        insert into pro_ma (id, userid, bid, cho)
+        values (#{id,jdbcType=INTEGER},
+                #{userid,jdbcType=INTEGER},
+                #{bid,jdbcType=INTEGER},
+                #{cho,jdbcType=INTEGER})
+    </insert>
+    <select id="selecttrue" parameterType="int" resultType="com.dbia.archive.model.pro_ma">
+        SELECT * FROM pro_ma where userid = #{userid} and bid = #{dirid} and cho = #{cho}
+    </select>
+</mapper>

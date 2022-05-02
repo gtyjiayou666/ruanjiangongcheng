@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dbia.archive.dao.usersMapper">
+  <insert id="insert" parameterType="com.dbia.archive.model.users">
+    insert into users (id,full_Name,created_Time,pass_word,group_id,group_leader)
+    values (#{id}, #{full_Name}, #{created_Time},#{pass_word},
+            #{group_id}, #{group_leader})
+  </insert>
+  <select id="selectid" parameterType="String" resultType="int">
+    SELECT IFNULL(MAX(id), 0) FROM users WHERE full_Name = #{fullname}
+  </select>
+  <select id="groupselectid" parameterType="int" resultType="int">
+    SELECT id FROM users WHERE group_id = #{groupid}
+  </select>
+  <select id="selectgroupleader" parameterType="int" resultType="boolean">
+    SELECT group_leader FROM users WHERE id = #{id}
+  </select>
+  <select id="selectpassword" parameterType="int" resultType="String">
+    SELECT pass_word FROM users WHERE id = #{id}
+  </select>
+  <select id="selectgroup_id" parameterType="int" resultType="int">
+    SELECT IFNULL(MAX(group_id), 0) FROM users WHERE id = #{id}
+  </select>
+  <select id="selectname" parameterType="int" resultType="String">
+    SELECT full_Name FROM users WHERE id = #{id}
+  </select>
+  <select id="selectall" resultType="com.dbia.archive.model.users">
+    SELECT * FROM users
+  </select>
+  <select id="nameselect" resultType="com.dbia.archive.model.users">
+    SELECT * FROM users WHERE full_Name = #{name}
+  </select>
+  <select id="idselect" resultType="com.dbia.archive.model.users">
+    SELECT * FROM users WHERE id = #{id}
+  </select>
+  <update id="update">
+    update users
+    set pass_word= #{pass_word},group_id= #{group_id},group_leader= #{group_leader}
+    where id = #{id}
+  </update>
+  <delete id="delete">
+    delete from users where id = #{id}
+  </delete>
+  <update id="updatepassword">
+    UPDATE users SET pass_word = #{pass_word} WHERE id = #{id}
+  </update>
+</mapper>

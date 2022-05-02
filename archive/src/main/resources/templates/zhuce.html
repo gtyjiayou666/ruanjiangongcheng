@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>zhuce</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+  <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+  <div class="layuimini-main">
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+          <input id="full_Name" type="text" name="full_Name" lay-verify="title" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+          <input id="password" type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+      </div>
+      <!--            <div class="layui-form-item">-->
+      <!--                <div class="layui-inline">-->
+      <!--                    <label class="layui-form-label">范围</label>-->
+      <!--                    <div class="layui-input-inline" style="width: 100px;">-->
+      <!--                        <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">-->
+      <!--                    </div>-->
+      <!--                    <div class="layui-form-mid">-</div>-->
+      <!--                    <div class="layui-input-inline" style="width: 100px;">-->
+      <!--                        <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">-->
+      <!--                    </div>-->
+      <!--                </div>-->
+      <!--            </div>-->
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">选择小组</label>
+        <div class="layui-input-block">
+          <select name="group" id="group">
+            <tr th:each="study_group: ${group}">
+              <option th:value="${study_group.getGroup_id}"><li th:text="${study_group.getGroup_id}"></li></option>
+            </tr>
+          </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">是否为组长</label>
+        <div class="layui-input-block">
+          <select name="leader" id="leader">
+            <option value=""></option>
+            <option value="1">是</option>
+            <option value="0">否</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script>
+  layui.use(['form', 'layedit', 'laydate'], function () {
+    var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+    //自定义验证规则
+    form.verify({
+      pass: [
+        /^[\S]{6,12}$/
+        , '密码必须6到12位，且不能出现空格'
+      ]
+      , content: function (value) {
+        layedit.sync(editIndex);
+      }
+    });
+
+    //监听指定开关
+    form.on('switch(switchTest)', function (data) {
+      layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+        offset: '6px'
+      });
+      layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+    });
+
+    //监听提交
+    form.on('submit(demo1)', function () {
+      var fullname=$("#full_Name").val();
+      var password=$("#password").val();
+      var group_id=$("#group").val();
+      var group_leader=$("#leader").val();
+      alert(fullname+password+group_id+group_leader);
+      $.ajax({
+        url:"users_add?full_Name="+fullname+"&pass_word="+password+"&group_id="+group_id+"&group_leader="+group_leader,
+        type:"get",
+        dataType: "json",
+        data:{
+        },
+        success : function() {
+          alert("注册成功");
+          location.reload();
+        },
+        error : function (){
+          alert("注册失败");
+        }
+      })
+      return false;
+    });
+
+  });
+</script>
+</body>
+</html>

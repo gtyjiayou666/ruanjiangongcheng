@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dbia.archive.dao.download_recordMapper">
+  <resultMap id="BaseResultMap" type="com.dbia.archive.model.download_record">
+    <id column="download_id" jdbcType="INTEGER" property="downloadId" />
+    <result column="file_id" jdbcType="INTEGER" property="fileId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="download_time" jdbcType="TIMESTAMP" property="downloadTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.dbia.archive.model.download_record">
+    insert into download_record (download_id, file_id, user_id,
+                                 download_time)
+    values (#{downloadId,jdbcType=INTEGER}, #{fileId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+            #{downloadTime,jdbcType=TIMESTAMP})
+  </insert>
+</mapper>

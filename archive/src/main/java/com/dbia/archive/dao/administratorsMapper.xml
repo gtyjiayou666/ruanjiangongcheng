@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dbia.archive.dao.administratorsMapper">
+  <resultMap id="BaseResultMap" type="com.dbia.archive.model.administrators">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="adm_Name" jdbcType="VARCHAR" property="admName" />
+    <result column="created_Time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
+  </resultMap>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from administrators
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from administrators
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dbia.archive.model.administratorsExample">
+    delete from administrators
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dbia.archive.model.administrators">
+    insert into administrators (id, adm_Name, created_Time,
+                                pass_word)
+    values (#{id,jdbcType=INTEGER}, #{admName,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP},
+            #{passWord,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectid" parameterType="String" resultType="int">
+    SELECT IFNULL(MAX(id), 0) FROM administrators WHERE adm_Name = #{fullname}
+  </select>
+  <select id="selectpassword" parameterType="int" resultType="String">
+    SELECT pass_word FROM administrators WHERE id = #{id}
+  </select>
+  <update id="updatepassword">
+    UPDATE administrators SET pass_word = #{pass_word} WHERE id = #{id}
+  </update>
+</mapper>
